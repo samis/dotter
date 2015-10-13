@@ -23,5 +23,9 @@ class DotterCLI < Thor
 	def init
 		puts "Initialising ~/dotfiles"
 	end
+	desc "list", "List all packages present in ~/dotfiles"
+	def list
+		puts "List of packages in ~/dotfiles"
+	end
 end
 DotterCLI.start(ARGV)
