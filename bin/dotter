@@ -27,9 +27,13 @@ class DotterCLI < Thor
 	def list
 		puts "List of packages in ~/dotfiles"
 	end
-	desc "stow PACKAGE" "Stow the given package name."
+	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
 		puts "Stowing package #{package}"
+	end
+	desc "unstow PACKAGE", "Unstow the given package name."
+	def unstow(package)
+		puts "Unstowing package #{package}"
 	end
 end
 DotterCLI.start(ARGV)
