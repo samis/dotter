@@ -12,3 +12,12 @@ if File.directory?(File.join(root,'.git'))
     end
   end
 end
+require 'thor'
+class DotterCLI < Thor
+	desc "version", "Print the dotter version"
+	def version
+		require 'dotter/version'
+		puts "This is dotter #{Dotter::VERSION}"
+	end
+end
+DotterCLI.start(ARGV)
