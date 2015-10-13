@@ -19,5 +19,9 @@ class DotterCLI < Thor
 		require 'dotter/version'
 		puts "This is dotter #{Dotter::VERSION}"
 	end
+	desc "init", "Initialise the directory structure for ~/dotfiles"
+	def init
+		puts "Initialising ~/dotfiles"
+	end
 end
 DotterCLI.start(ARGV)
