@@ -35,5 +35,9 @@ class DotterCLI < Thor
 	def unstow(package)
 		puts "Unstowing package #{package}"
 	end
+	desc "track PACKAGE", "Begin tracking the given package with Git"
+	def track(package)
+		puts "Initialising Git repository for package #{package}"
+	end
 end
 DotterCLI.start(ARGV)
