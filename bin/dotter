@@ -39,9 +39,13 @@ class DotterCLI < Thor
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
 	end
-	desc "publish PACKAGE", "Make a package available your public dotfiles repository"
+	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
 		puts "Making package #{package} public"
+	end
+	desc "unpublish PACKAGE", "Make a package private after publishing it."
+	def unpublish(package)
+		puts "Making package #{package} private again"
 	end
 end
 DotterCLI.start(ARGV)
