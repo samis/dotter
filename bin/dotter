@@ -59,9 +59,22 @@ class DotterCLI < Thor
 	def update(package)
 		puts "Updating the contents / symlinks for package #{package}"
 	end
-	desc "update-all", "Updates all stowed packages."
-	def update-all()
+	desc "update_all", "Updates all stowed packages."
+	def update_all()
 		puts "Updating all stowed packages"
 	end
+	desc "import PATH PACKAGE", "Imports a file or directory into the specified package"
+	def import(path, package)
+		puts "Importing #{path} into package {package}"
+	end
+	desc "import_repo REPO_URL PACKAGE", "Clones the specified git repository as the contents of the specified Package."
+	def import_repo(repo_url, package)
+		puts "Cloning repository #{repo_url} into package #{package}"
+	end
+	desc "clone REPO_URL", "Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data."
+	def clone(repo_url)
+		puts "Cloning repository #{repo_url} directly into ~/dotfiles"
+	end
+
 end
 DotterCLI.start(ARGV)
