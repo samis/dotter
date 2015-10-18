@@ -47,5 +47,13 @@ class DotterCLI < Thor
 	def unpublish(package)
 		puts "Making package #{package} private again"
 	end
+	desc "log PACKAGE", "Obtain the VCS log of a Git-tracked package."
+	def log(package)
+		puts "Obtaining git log for package #{package}"
+	end
+	desc "commit PACKAGE", "Commit your changes to a Git-tracked package."
+	def commit(package)
+		puts "Committing the changes to package #{package}"
+	end
 end
 DotterCLI.start(ARGV)
