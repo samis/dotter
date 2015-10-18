@@ -55,5 +55,13 @@ class DotterCLI < Thor
 	def commit(package)
 		puts "Committing the changes to package #{package}"
 	end
+	desc "update PACKAGE", "Updates the specified package"
+	def update(package)
+		puts "Updating the contents / symlinks for package #{package}"
+	end
+	desc "update-all", "Updates all stowed packages."
+	def update-all()
+		puts "Updating all stowed packages"
+	end
 end
 DotterCLI.start(ARGV)
