@@ -1,5 +1,6 @@
 require 'thor'
-class DotterCLI < Thor
+module Dotter
+class CLI < Thor
 	desc "version", "Print the dotter version"
 	def version
 		require 'dotter/version'
@@ -62,4 +63,5 @@ class DotterCLI < Thor
 		puts "Cloning repository #{repo_url} directly into ~/dotfiles"
 	end
 
+end
 end

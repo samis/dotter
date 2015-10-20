@@ -13,4 +13,4 @@ if File.directory?(File.join(root,'.git'))
   end
 end
 require 'dotter/cli'
-DotterCLI.start(ARGV)
+Dotter::CLI.start(ARGV)
