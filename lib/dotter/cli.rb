@@ -13,6 +13,13 @@ class CLI < Thor
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
 		puts "List of packages in ~/dotfiles"
+		directory_name = File.expand_path('~/dotfiles')
+		require 'pathname'
+		directory = Pathname.new(directory_name)
+		directories = directory.children.select { |c| c.directory? }
+		package_names = []
+		directories.each {|directory| package_names.push(directory.basename)}
+		package_names.each {|package| puts package}
 	end
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
