@@ -31,6 +31,9 @@ class CLI < Thor
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		puts "Unstowing package #{package}"
+		dotfiles_path = File.expand_path('~/dotfiles')
+		Dir.chdir(dotfiles_path)
+		puts `stow -Dv #{package}`
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
