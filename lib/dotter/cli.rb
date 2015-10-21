@@ -24,6 +24,9 @@ class CLI < Thor
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
 		puts "Stowing package #{package}"
+		dotfiles_path = File.expand_path('~/dotfiles')
+		Dir.chdir(dotfiles_path)
+		puts `stow -v #{package}`
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
