@@ -1,4 +1,5 @@
 require 'thor'
+require 'dotter/utilities'
 module Dotter
 class CLI < Thor
 	desc "version", "Print the dotter version"
@@ -24,15 +25,13 @@ class CLI < Thor
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
 		puts "Stowing package #{package}"
-		dotfiles_path = File.expand_path('~/dotfiles')
-		Dir.chdir(dotfiles_path)
+		Dotter::Utilities.go_to_dotfiles
 		puts `stow -v #{package}`
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		puts "Unstowing package #{package}"
-		dotfiles_path = File.expand_path('~/dotfiles')
-		Dir.chdir(dotfiles_path)
+		Dotter::Utilities.go_to_dotfiles
 		puts `stow -Dv #{package}`
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
