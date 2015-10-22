@@ -50,9 +50,10 @@ class CLI < Thor
 	def log(package)
 		puts "Obtaining git log for package #{package}"
 	end
+	method_option :commit_message, :required => true, :aliases => "-m"
 	desc "commit PACKAGE", "Commit your changes to a Git-tracked package."
 	def commit(package)
-		puts "Committing the changes to package #{package}"
+		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
 	end
 	desc "update PACKAGE", "Updates the specified package"
 	def update(package)
