@@ -10,6 +10,21 @@ class CLI < Thor
 	desc "init", "Initialise the directory structure for ~/dotfiles"
 	def init
 		puts "Initialising ~/dotfiles"
+		unless File.exist?(File.expand_path('~/dotfiles'))
+			puts "Creating the dotfiles directory."
+			Dir.mkdir(File.expand_path('~/dotfiles'))
+		end
+		Dotter::Utilities.go_to_dotfiles
+		unless File.exist?('public')
+			puts "Creating the directory for the combined public dotfiles."
+			Dir.mkdir('public')
+		end
+		unless File.exist?('dotter')
+			puts "Creating an initial package for dotter."
+			Dir.mkdir('dotter')
+			Dir.mkdir('dotter/.dotter')
+			Dir.mkdir('dotter/.dotter/gitrepos')
+		end
 	end
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
