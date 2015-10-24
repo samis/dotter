@@ -93,6 +93,14 @@ class CLI < Thor
 	def clone(repo_url)
 		puts "Cloning repository #{repo_url} directly into ~/dotfiles"
 	end
+	desc "status PACKAGE", "Obtain the repository status of a Git-tracked package."
+	def status(package)
+		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
+		project_path = dotfiles_path  + package
+		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
+		metadata_path = dotter_path + package
+		system({"GIT_DIR" => metadata_path.to_s}, "git status")
+	end
 
-end
+    end
 end
