@@ -10,21 +10,13 @@ class CLI < Thor
 	desc "init", "Initialise the directory structure for ~/dotfiles"
 	def init
 		puts "Initialising ~/dotfiles"
-		unless File.exist?(File.expand_path('~/dotfiles'))
-			puts "Creating the dotfiles directory."
-			Dir.mkdir(File.expand_path('~/dotfiles'))
-		end
+		puts "Creating the dotfiles directory."
+		FileUtils.mkpath(File.expand_path('~/dotfiles'))
 		Dotter::Utilities.go_to_dotfiles
-		unless File.exist?('public')
-			puts "Creating the directory for the combined public dotfiles."
-			Dir.mkdir('public')
-		end
-		unless File.exist?('dotter')
-			puts "Creating an initial package for dotter."
-			Dir.mkdir('dotter')
-			Dir.mkdir('dotter/.dotter')
-			Dir.mkdir('dotter/.dotter/gitrepos')
-		end
+		puts "Creating the directory for the combined public dotfiles."
+		FileUtils.mkpath('public')
+		puts "Creating an initial package for dotter."
+		FileUtils.mkpath('dotter/.dotter/gitrepos')
 	end
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
@@ -34,8 +26,12 @@ class CLI < Thor
 		directory = Pathname.new(directory_name)
 		directories = directory.children.select { |c| c.directory? }
 		package_names = []
-		directories.each {|directory| package_names.push(directory.basename)}
-		package_names.each {|package| puts package}
+		directories.each do |directory| 
+			package_names.push(directory.basename)
+		end
+		package_names.each do |package| 
+			puts package
+		end
 	end
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
@@ -52,6 +48,13 @@ class CLI < Thor
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
+		require 'git'
+		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
+		project_path = dotfiles_path  + package
+		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
+		metadata_path = dotter_path + package
+		Git.init(project_path.to_s,  { :repository => metadata_path.to_s})
+		puts "Repository for package #{package} initialised. Git's metadata is stored in #{metadata_path.to_s}"
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
