@@ -133,5 +133,17 @@ class CLI < Thor
 		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		repo.reset()
 	end
+	desc "log PACKAGE", "View the commit log of a package."
+	def log(package)
+		puts "Obtaining the log of package #{package}"
+		project_path = Utilities.package_path(package)
+		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)
+		require 'git'
+		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		repo.log.each do |commit|
+			puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
+		end
+	end
 end
 end
