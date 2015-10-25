@@ -28,5 +28,8 @@ module Dotter
 		def add(file)
 			@repo.add(file)
 		end
+		def reset()
+			@repo.reset()
+		end
 	end
 end

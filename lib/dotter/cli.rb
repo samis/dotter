@@ -123,11 +123,8 @@ class CLI < Thor
 	desc "reset PACKAGE", "Reset what will be commmitted in the next commit to the given package."
 	def reset(package)
 		puts "Resetting what will be committed to package #{package}"
-		project_path = Utilities.package_path(package)
-		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)
-		require 'git'
-		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		require 'dotter/gitrepo'
+		repo = GitRepo.new(package)
 		repo.reset()
 	end
 	desc "log PACKAGE", "View the commit log of a package."
