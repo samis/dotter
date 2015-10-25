@@ -1,5 +1,6 @@
 require 'thor'
 require 'dotter/utilities'
+require 'dotter/gitrepo'
 module Dotter
 class CLI < Thor
 	desc "version", "Print the dotter version"
@@ -49,7 +50,6 @@ class CLI < Thor
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
-		require 'dotter/gitrepo'
 		repo = GitRepo.new(package,true)
 		puts "Repository for package #{package} initialised. Git's metadata is stored in #{repo.metadata_path.to_s}"
 	end
@@ -67,7 +67,6 @@ class CLI < Thor
 	def commit(package)
 		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
 		commit_message = options.commit_message
-		require 'dotter/gitrepo'
 		repo = GitRepo.new(package)
 		if options.all
 			repo.commit_all(commit_message)
@@ -105,21 +104,18 @@ class CLI < Thor
 	desc "add PACKAGE FILE", "Add a file from a package to the next commit of that package."
 	def add(package,file)
 		puts "Marking #{file} to be committed for package #{package}"
-		require 'dotter/gitrepo'
 		repo = GitRepo.new(package)
 		repo.add(file)
     end
 	desc "reset PACKAGE", "Reset what will be commmitted in the next commit to the given package."
 	def reset(package)
 		puts "Resetting what will be committed to package #{package}"
-		require 'dotter/gitrepo'
 		repo = GitRepo.new(package)
 		repo.reset()
 	end
 	desc "log PACKAGE", "View the commit log of a package."
 	def log(package)
 		puts "Obtaining the log of package #{package}"
-		require 'dotter/gitrepo'
 		repo = GitRepo.new(package)
 		repo.log.each do |commit|
 			puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
