@@ -49,12 +49,9 @@ class CLI < Thor
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
-		require 'git'
-		project_path = Utilities.package_path(package)
-		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)
-		Git.init(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
-		puts "Repository for package #{package} initialised. Git's metadata is stored in #{metadata_path.to_s}"
+		require 'dotter/gitrepo'
+		repo = GitRepo.new(package,true)
+		puts "Repository for package #{package} initialised. Git's metadata is stored in #{repo.metadata_path.to_s}"
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
@@ -122,11 +119,8 @@ class CLI < Thor
 	desc "log PACKAGE", "View the commit log of a package."
 	def log(package)
 		puts "Obtaining the log of package #{package}"
-		project_path = Utilities.package_path(package)
-		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)
-		require 'git'
-		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		require 'dotter/gitrepo'
+		repo = GitRepo.new(package)
 		repo.log.each do |commit|
 			puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
 		end

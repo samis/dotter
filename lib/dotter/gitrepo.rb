@@ -15,6 +15,7 @@ module Dotter
 		def open()
 			require 'git'
 			@repo = Git.open(@project_path.to_s,  { :repository => @metadata_path.to_s, :index => @metadata_indexes_path.to_s})
+			@log = @repo.log
 		end
 		def init()
 			require 'git'
@@ -25,6 +26,7 @@ module Dotter
 		attr_reader :package
 		attr_reader :metadata_path
 		attr_reader :metadata_indexes_path
+		attr_reader :log
 		def add(file)
 			@repo.add(file)
 		end
