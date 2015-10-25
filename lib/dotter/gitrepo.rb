@@ -21,5 +21,9 @@ module Dotter
 			@repo = Git.init(@project_path.to_s,  { :repository => @metadata_path.to_s, :index => @metadata_indexes_path.to_s})
 		end
 		attr_reader :repo
+		attr_reader :project_path
+		attr_reader :package
+		attr_reader :metadata_path
+		attr_reader :metadata_indexes_path
 	end
 end
