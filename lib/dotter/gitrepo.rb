@@ -25,5 +25,8 @@ module Dotter
 		attr_reader :package
 		attr_reader :metadata_path
 		attr_reader :metadata_indexes_path
+		def add(file)
+			@repo.add(file)
+		end
 	end
 end
