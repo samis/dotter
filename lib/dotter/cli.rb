@@ -50,12 +50,9 @@ class CLI < Thor
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
 		require 'git'
-		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
-		project_path = dotfiles_path  + package
-		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
-		metadata_path = dotter_path + package
-		indexes_path = dotfiles_path + 'dotter/.dotter/indexes'
-		metadata_indexes_path = indexes_path + package
+		project_path = Utilities.package_path(package)
+		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)
 		Git.init(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		puts "Repository for package #{package} initialised. Git's metadata is stored in #{metadata_path.to_s}"
 	end
@@ -78,13 +75,10 @@ class CLI < Thor
 		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
 		commit_message = options.commit_message
 		require 'pathname'
-		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
-		project_path = dotfiles_path  + package
-		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
-		metadata_path = dotter_path + package
+		project_path = Utilities.package_path(package)
+		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)\
 		require 'git'
-		indexes_path = dotfiles_path + 'dotter/.dotter/indexes'
-		metadata_indexes_path = indexes_path + package
 		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		if options.all
 			repo.commit_all(commit_message)
