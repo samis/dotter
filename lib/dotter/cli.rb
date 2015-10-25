@@ -77,7 +77,7 @@ class CLI < Thor
 		require 'pathname'
 		project_path = Utilities.package_path(package)
 		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)\
+		metadata_indexes_path = Utilities.index_path(package)
 		require 'git'
 		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		if options.all
@@ -109,9 +109,18 @@ class CLI < Thor
 	desc "status PACKAGE", "Obtain the repository status of a Git-tracked package."
 	def status(package)
 		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)
 		# Punt because it does this better than ruby-git.
-		system({"GIT_DIR" => metadata_path.to_s}, "git status")
+		system({"GIT_DIR" => metadata_path.to_s, "GIT_INDEX_FILE" => metadata_indexes_path.to_s}, "git status")
 	end
-
+	desc "add PACKAGE FILE", "Add a file from a package to the next commit of that package."
+	def add(package,file)
+		project_path = Utilities.package_path(package)
+		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)
+		require 'git'
+		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		repo.add(file)
     end
+end
 end
