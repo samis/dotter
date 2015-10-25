@@ -108,10 +108,7 @@ class CLI < Thor
 	end
 	desc "status PACKAGE", "Obtain the repository status of a Git-tracked package."
 	def status(package)
-		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
-		project_path = dotfiles_path  + package
-		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
-		metadata_path = dotter_path + package
+		metadata_path = Utilities.repo_path(package)
 		# Punt because it does this better than ruby-git.
 		system({"GIT_DIR" => metadata_path.to_s}, "git status")
 	end
