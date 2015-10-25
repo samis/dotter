@@ -17,6 +17,7 @@ class CLI < Thor
 		FileUtils.mkpath('public')
 		puts "Creating an initial package for dotter."
 		FileUtils.mkpath('dotter/.dotter/gitrepos')
+		FileUtils.mkpath('dotter/.dotter/indexes/')
 	end
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
@@ -53,7 +54,9 @@ class CLI < Thor
 		project_path = dotfiles_path  + package
 		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
 		metadata_path = dotter_path + package
-		Git.init(project_path.to_s,  { :repository => metadata_path.to_s})
+		indexes_path = dotfiles_path + 'dotter/.dotter/indexes'
+		metadata_indexes_path = indexes_path + package
+		Git.init(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		puts "Repository for package #{package} initialised. Git's metadata is stored in #{metadata_path.to_s}"
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
@@ -69,9 +72,25 @@ class CLI < Thor
 		puts "Obtaining git log for package #{package}"
 	end
 	method_option :commit_message, :required => true, :aliases => "-m"
+	method_option :all, :type => :boolean, :aliases => "-a"
 	desc "commit PACKAGE", "Commit your changes to a Git-tracked package."
 	def commit(package)
 		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
+		commit_message = options.commit_message
+		require 'pathname'
+		dotfiles_path = Pathname(File.expand_path('~/dotfiles'))
+		project_path = dotfiles_path  + package
+		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
+		metadata_path = dotter_path + package
+		require 'git'
+		indexes_path = dotfiles_path + 'dotter/.dotter/indexes'
+		metadata_indexes_path = indexes_path + package
+		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		if options.all
+			repo.commit_all(commit_message)
+		else
+			repo.commit(commit_message)
+		end
 	end
 	desc "update PACKAGE", "Updates the specified package"
 	def update(package)
@@ -99,6 +118,7 @@ class CLI < Thor
 		project_path = dotfiles_path  + package
 		dotter_path = dotfiles_path + 'dotter/.dotter/gitrepos'
 		metadata_path = dotter_path + package
+		# Punt because it does this better than ruby-git.
 		system({"GIT_DIR" => metadata_path.to_s}, "git status")
 	end
 
