@@ -115,6 +115,7 @@ class CLI < Thor
 	end
 	desc "add PACKAGE FILE", "Add a file from a package to the next commit of that package."
 	def add(package,file)
+		puts "Marking #{file} to be committed for package #{package}"
 		project_path = Utilities.package_path(package)
 		metadata_path = Utilities.repo_path(package)
 		metadata_indexes_path = Utilities.index_path(package)
@@ -122,5 +123,15 @@ class CLI < Thor
 		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
 		repo.add(file)
     end
+	desc "reset PACKAGE", "Reset what will be commmitted in the next commit to the given package."
+	def reset(package)
+		puts "Resetting what will be committed to package #{package}"
+		project_path = Utilities.package_path(package)
+		metadata_path = Utilities.repo_path(package)
+		metadata_indexes_path = Utilities.index_path(package)
+		require 'git'
+		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		repo.reset()
+	end
 end
 end
