@@ -64,22 +64,14 @@ class CLI < Thor
 	def unpublish(package)
 		puts "Making package #{package} private again"
 	end
-	desc "log PACKAGE", "Obtain the VCS log of a Git-tracked package."
-	def log(package)
-		puts "Obtaining git log for package #{package}"
-	end
 	method_option :commit_message, :required => true, :aliases => "-m"
 	method_option :all, :type => :boolean, :aliases => "-a"
 	desc "commit PACKAGE", "Commit your changes to a Git-tracked package."
 	def commit(package)
 		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
 		commit_message = options.commit_message
-		require 'pathname'
-		project_path = Utilities.package_path(package)
-		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)
-		require 'git'
-		repo = Git.open(project_path.to_s,  { :repository => metadata_path.to_s, :index => metadata_indexes_path.to_s})
+		require 'dotter/gitrepo'
+		repo = GitRepo.new(package)
 		if options.all
 			repo.commit_all(commit_message)
 		else

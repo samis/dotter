@@ -31,5 +31,11 @@ module Dotter
 		def reset()
 			@repo.reset()
 		end
+		def commit_all(commit_message)
+			@repo.commit_all(commit_message)
+		end
+		def commit(commit_message)
+			@repo.commit(commit_message)
+		end
 	end
 end
