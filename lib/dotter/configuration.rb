@@ -2,9 +2,10 @@ require 'dotter/utilities'
 require 'inifile'
 module Dotter
 	class Configuration
+		include Utilities
 		attr_reader :config_file
 		attr_accessor :config
-		def initialize(config_file=Utilities.package_path('dotter') + '.dotter/Dotfile')
+		def initialize(config_file=package_path('dotter') + '.dotter/Dotfile')
 			@config_file = config_file
 			@config = IniFile.load(@config_file.to_s)
 		end

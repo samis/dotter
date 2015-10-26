@@ -6,6 +6,7 @@ require 'dotter/configuration'
 require 'pathname'
 module Dotter
 class CLI < Thor
+	include Utilities
 	desc "version", "Print the dotter version"
 	def version
 		puts "This is dotter #{Dotter::VERSION}"
@@ -15,7 +16,7 @@ class CLI < Thor
 		puts "Initialising ~/dotfiles"
 		puts "Creating the dotfiles directory."
 		FileUtils.mkpath(File.expand_path('~/dotfiles'))
-		Utilities.go_to_dotfiles
+		go_to_dotfiles
 		puts "Creating the directory for the combined public dotfiles."
 		FileUtils.mkpath('public')
 		puts "Creating an initial package for dotter."
@@ -45,14 +46,14 @@ class CLI < Thor
 			exit(1)
 		end
 		puts "Stowing package #{package}"
-		Utilities.go_to_dotfiles
+		go_to_dotfiles
 		puts `stow -v #{package}`
 		config.set_state(package, 'stowed')
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		puts "Unstowing package #{package}"
-		Utilities.go_to_dotfiles
+		go_to_dotfiles
 		puts `stow -Dv #{package}`
 		config = Configuration.new
 		config.set_state(package, 'unstowed')
@@ -108,8 +109,8 @@ class CLI < Thor
 	end
 	desc "status PACKAGE", "Obtain the repository status of a Git-tracked package."
 	def status(package)
-		metadata_path = Utilities.repo_path(package)
-		metadata_indexes_path = Utilities.index_path(package)
+		metadata_path = repo_path(package)
+		metadata_indexes_path = index_path(package)
 		# Punt because it does this better than ruby-git.
 		system({"GIT_DIR" => metadata_path.to_s, "GIT_INDEX_FILE" => metadata_indexes_path.to_s}, "git status")
 	end
