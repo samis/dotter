@@ -2,6 +2,7 @@ require 'thor'
 require 'dotter/utilities'
 require 'dotter/gitrepo'
 require 'dotter/version'
+require 'dotter/configuration'
 require 'pathname'
 module Dotter
 class CLI < Thor
@@ -14,7 +15,7 @@ class CLI < Thor
 		puts "Initialising ~/dotfiles"
 		puts "Creating the dotfiles directory."
 		FileUtils.mkpath(File.expand_path('~/dotfiles'))
-		Dotter::Utilities.go_to_dotfiles
+		Utilities.go_to_dotfiles
 		puts "Creating the directory for the combined public dotfiles."
 		FileUtils.mkpath('public')
 		puts "Creating an initial package for dotter."
@@ -38,13 +39,15 @@ class CLI < Thor
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
 		puts "Stowing package #{package}"
-		Dotter::Utilities.go_to_dotfiles
+		Utilities.go_to_dotfiles
 		puts `stow -v #{package}`
+		config = Configuration.new
+		config.set_state(package, 'stowed')
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		puts "Unstowing package #{package}"
-		Dotter::Utilities.go_to_dotfiles
+		Utilities.go_to_dotfiles
 		puts `stow -Dv #{package}`
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
