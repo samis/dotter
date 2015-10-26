@@ -1,11 +1,12 @@
 require 'thor'
 require 'dotter/utilities'
 require 'dotter/gitrepo'
+require 'dotter/version'
+require 'pathname'
 module Dotter
 class CLI < Thor
 	desc "version", "Print the dotter version"
 	def version
-		require 'dotter/version'
 		puts "This is dotter #{Dotter::VERSION}"
 	end
 	desc "init", "Initialise the directory structure for ~/dotfiles"
@@ -24,7 +25,6 @@ class CLI < Thor
 	def list
 		puts "List of packages in ~/dotfiles"
 		directory_name = File.expand_path('~/dotfiles')
-		require 'pathname'
 		directory = Pathname.new(directory_name)
 		directories = directory.children.select { |c| c.directory? }
 		package_names = []
