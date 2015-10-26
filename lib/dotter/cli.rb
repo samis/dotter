@@ -38,10 +38,15 @@ class CLI < Thor
 	end
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
+		config = Configuration.new
+		package_config = config.package_config(package)
+		if package_config['state'] == 'stowed'
+			error "Package #{package} is already stowed."
+			exit(1)
+		end
 		puts "Stowing package #{package}"
 		Utilities.go_to_dotfiles
 		puts `stow -v #{package}`
-		config = Configuration.new
 		config.set_state(package, 'stowed')
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
