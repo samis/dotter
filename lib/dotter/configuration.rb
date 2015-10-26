@@ -14,9 +14,14 @@ module Dotter
 		def save()
 			@config.write()
 		end
-		def set_state(package. state)
+		def set_state(package, state)
 			package_conf = self.package_config(package)
 			package_conf['state'] = state
+			self.save()
+		end
+		def track(package)
+			package_conf = self.package_config(package)
+			package_conf['tracked'] = true
 			self.save()
 		end
 	end

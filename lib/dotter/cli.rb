@@ -57,6 +57,8 @@ class CLI < Thor
 		puts "Initialising Git repository for package #{package}"
 		repo = GitRepo.new(package,true)
 		puts "Repository for package #{package} initialised. Git's metadata is stored in #{repo.metadata_path.to_s}"
+		config = Configuration.new
+		config.track(package)
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
