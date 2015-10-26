@@ -15,7 +15,7 @@ class CLI < Thor
 	def init
 		puts "Initialising ~/dotfiles"
 		puts "Creating the dotfiles directory."
-		FileUtils.mkpath(File.expand_path('~/dotfiles'))
+		FileUtils.mkpath(dotfiles_path)
 		go_to_dotfiles
 		puts "Creating the directory for the combined public dotfiles."
 		FileUtils.mkpath('public')
@@ -26,7 +26,7 @@ class CLI < Thor
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
 		puts "List of packages in ~/dotfiles"
-		directory_name = File.expand_path('~/dotfiles')
+		directory_name = dotfiles_path
 		directory = Pathname.new(directory_name)
 		directories = directory.children.select { |c| c.directory? }
 		package_names = []
