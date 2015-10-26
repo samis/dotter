@@ -49,6 +49,8 @@ class CLI < Thor
 		puts "Unstowing package #{package}"
 		Utilities.go_to_dotfiles
 		puts `stow -Dv #{package}`
+		config = Configuration.new
+		config.set_state(package, 'unstowed')
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
