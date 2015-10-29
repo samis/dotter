@@ -8,30 +8,39 @@ module Dotter
 			@name = name
 			@config = Configuration.new
 			@our_config = @config.package_config(@name)
+			if self.tracked?
+				@repo = GitRepo.new(name)
+			end
 		end
-		def stow()
+		def stow
 			go_to_dotfiles
 			returned_output =  `stow -v #{@name}`
 			@config.set_state(@name, 'stowed')
 			returned_output
 		end
-		def unstow()
+		def unstow
 			go_to_dotfiles
 			returned_output =  `stow -Dv #{@name}`
 			@config.set_state(@name, 'unstowed')
 			returned_output
 		end
-		def track()
+		def track
 			@repo = GitRepo.new(@name,true)
 			@config.track(@name)
 		end
-		def stowed?()
+		def stowed?
 			@our_config['state'] == 'stowed'
 		end
-		def unstowed?()
+		def unstowed?
 			!self.stowed?
 		end
-		def to_s()
+		def tracked?
+			@our_config['tracked']
+		end
+		def untracked?
+			!self.tracked?
+		end
+		def to_s
 			@name
 		end
 		attr_reader :name
