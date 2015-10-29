@@ -31,6 +31,9 @@ module Dotter
 		def unstowed?()
 			!self.stowed?
 		end
+		def to_s()
+			@name
+		end
 		attr_reader :name
 		attr_accessor :config
 		attr_reader :repo

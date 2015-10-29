@@ -42,20 +42,20 @@ class CLI < Thor
 	def stow(package)
 		package = Package.new(package)
 		if package.stowed?
-			error "Package #{package.name} is already stowed."
+			error "Package #{package} is already stowed."
 			exit(1)
 		end
-		puts "Stowing package #{package.name}"
+		puts "Stowing package #{package}"
 		puts package.stow
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		package = Package.new(package)
 		if package.unstowed?
-			error "Package #{package.name} is not stowed."
+			error "Package #{package} is not stowed."
 			exit(1)
 		end
-		puts "Unstowing package #{package.name}"
+		puts "Unstowing package #{package}"
 		puts package.unstow
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
@@ -63,7 +63,7 @@ class CLI < Thor
 		puts "Initialising Git repository for package #{package}"
 		package = Package.new(package)
 		package.track
-		puts "Repository for package #{package.name} initialised. Git's metadata is stored in #{package.repo.metadata_path.to_s}"
+		puts "Repository for package #{package} initialised. Git's metadata is stored in #{package.repo.metadata_path.to_s}"
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
