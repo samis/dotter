@@ -77,9 +77,14 @@ class CLI < Thor
 	method_option :all, :type => :boolean, :aliases => "-a"
 	desc "commit PACKAGE", "Commit your changes to a Git-tracked package."
 	def commit(package)
+		package = Package.new(package)
+		if package.untracked?
+			error "Package #{package} is not tracked by Git."
+			exit 1
+		end
 		puts "Committing the changes to package #{package} with commit message #{options.commit_message}."
 		commit_message = options.commit_message
-		repo = GitRepo.new(package)
+		repo = package.repo
 		if options.all
 			repo.commit_all(commit_message)
 		else
@@ -108,6 +113,11 @@ class CLI < Thor
 	end
 	desc "status PACKAGE", "Obtain the repository status of a Git-tracked package."
 	def status(package)
+		package = Package.new(package)
+		if package.untracked?
+			error "Package #{package} is not tracked by Git."
+			exit 1
+		end
 		metadata_path = repo_path(package)
 		metadata_indexes_path = index_path(package)
 		# Punt because it does this better than ruby-git.
@@ -115,20 +125,35 @@ class CLI < Thor
 	end
 	desc "add PACKAGE FILE", "Add a file from a package to the next commit of that package."
 	def add(package,file)
+		package = Package.new(package)
+		if package.untracked?
+			error "Package #{package} is not tracked by Git."
+			exit 1
+		end
 		puts "Marking #{file} to be committed for package #{package}"
-		repo = GitRepo.new(package)
+		repo = package.repo
 		repo.add(file)
     end
 	desc "reset PACKAGE", "Reset what will be commmitted in the next commit to the given package."
 	def reset(package)
+		package = Package.new(package)
+		if package.untracked?
+			error "Package #{package} is not tracked by Git."
+			exit 1
+		end
 		puts "Resetting what will be committed to package #{package}"
-		repo = GitRepo.new(package)
+		repo = package.repo
 		repo.reset()
 	end
 	desc "log PACKAGE", "View the commit log of a package."
 	def log(package)
+		package = Package.new(package)
+		if package.untracked?
+			error "Package #{package} is not tracked by Git."
+			exit 1
+		end
 		puts "Obtaining the log of package #{package}"
-		repo = GitRepo.new(package)
+		repo = package.repo
 		repo.log.each do |commit|
 			puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
 		end
