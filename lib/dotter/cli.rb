@@ -3,6 +3,7 @@ require 'dotter/utilities'
 require 'dotter/gitrepo'
 require 'dotter/version'
 require 'dotter/configuration'
+require 'dotter/package'
 require 'pathname'
 module Dotter
 class CLI < Thor
@@ -46,9 +47,8 @@ class CLI < Thor
 			exit(1)
 		end
 		puts "Stowing package #{package}"
-		go_to_dotfiles
-		puts `stow -v #{package}`
-		config.set_state(package, 'stowed')
+		package = Package.new(package)
+		package.stow
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
