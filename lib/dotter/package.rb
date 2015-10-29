@@ -20,10 +20,11 @@ module Dotter
 			@config.set_state(@name, 'unstowed')
 		end
 		def track()
-			puts "Initialising Git repository for package #{package}"
 			@repo = GitRepo.new(@name,true)
-			puts "Repository for package #{@name} initialised. Git's metadata is stored in #{@repo.metadata_path.to_s}"
 			@config.track(@name)
+		end
+		def stowed?()
+			@our_config['state'] == 'stowed'
 		end
 		attr_reader :name
 		attr_accessor :config
