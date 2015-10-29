@@ -53,18 +53,15 @@ class CLI < Thor
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
 		puts "Unstowing package #{package}"
-		go_to_dotfiles
-		puts `stow -Dv #{package}`
-		config = Configuration.new
-		config.set_state(package, 'unstowed')
+		package = Package.new(package)
+		package.unstow
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)
 		puts "Initialising Git repository for package #{package}"
-		repo = GitRepo.new(package,true)
-		puts "Repository for package #{package} initialised. Git's metadata is stored in #{repo.metadata_path.to_s}"
-		config = Configuration.new
-		config.track(package)
+		package = Package.new(package)
+		package.track
+		puts "Repository for package #{package.name} initialised. Git's metadata is stored in #{package.repo.metadata_path.to_s}"
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
