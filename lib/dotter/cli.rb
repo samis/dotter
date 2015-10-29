@@ -46,7 +46,7 @@ class CLI < Thor
 			exit(1)
 		end
 		puts "Stowing package #{package.name}"
-		package.stow
+		puts package.stow
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
@@ -56,7 +56,7 @@ class CLI < Thor
 			exit(1)
 		end
 		puts "Unstowing package #{package.name}"
-		package.unstow
+		puts package.unstow
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"
 	def track(package)

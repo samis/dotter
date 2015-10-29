@@ -11,13 +11,15 @@ module Dotter
 		end
 		def stow()
 			go_to_dotfiles
-			puts `stow -v #{@name}`
+			returned_output =  `stow -v #{@name}`
 			@config.set_state(@name, 'stowed')
+			returned_output
 		end
 		def unstow()
 			go_to_dotfiles
-			puts `stow -Dv #{@name}`
+			returned_output =  `stow -Dv #{@name}`
 			@config.set_state(@name, 'unstowed')
+			returned_output
 		end
 		def track()
 			@repo = GitRepo.new(@name,true)
