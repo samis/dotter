@@ -50,8 +50,12 @@ class CLI < Thor
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
 	def unstow(package)
-		puts "Unstowing package #{package}"
 		package = Package.new(package)
+		if package.unstowed?
+			error "Package #{package.name} is not stowed."
+			exit(1)
+		end
+		puts "Unstowing package #{package.name}"
 		package.unstow
 	end
 	desc "track PACKAGE", "Begin tracking the given package with Git"

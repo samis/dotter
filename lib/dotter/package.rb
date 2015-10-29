@@ -26,6 +26,9 @@ module Dotter
 		def stowed?()
 			@our_config['state'] == 'stowed'
 		end
+		def unstowed?()
+			!self.stowed?
+		end
 		attr_reader :name
 		attr_accessor :config
 		attr_reader :repo
