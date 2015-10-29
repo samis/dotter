@@ -7,7 +7,7 @@ module Dotter
 		attr_accessor :config
 		def initialize(config_file=package_path('dotter') + '.dotter/Dotfile')
 			@config_file = config_file
-			@config = IniFile.load(@config_file.to_s)
+			@config = IniFile.load(config_file)
 		end
 		def package_config(package)
 			@config[package]
