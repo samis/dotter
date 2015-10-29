@@ -40,14 +40,12 @@ class CLI < Thor
 	end
 	desc "stow PACKAGE", "Stow the given package name."
 	def stow(package)
-		config = Configuration.new
-		package_config = config.package_config(package)
-		if package_config['state'] == 'stowed'
-			error "Package #{package} is already stowed."
+		package = Package.new(package)
+		if package.stowed?
+			error "Package #{package.name} is already stowed."
 			exit(1)
 		end
-		puts "Stowing package #{package}"
-		package = Package.new(package)
+		puts "Stowing package #{package.name}"
 		package.stow
 	end
 	desc "unstow PACKAGE", "Unstow the given package name."
