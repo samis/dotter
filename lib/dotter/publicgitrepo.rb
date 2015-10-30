@@ -1,5 +1,6 @@
 require 'git'
 require 'dotter/utilities'
+require 'dotter/gitrepo'
 module Dotter
 	class PublicGitRepo
 		include Utilities
@@ -17,5 +18,13 @@ module Dotter
 		def init
 			@repo = Git.init(@project_path.to_s)
 		end
+		def add_package(package)
+			packagerepo = GitRepo.new(package)
+			package_repo = packagerepo.repo
+			@repo.add_remote(package.to_s, package_repo)
+			subtree_output = `git subtree add --prefix #{package.to_s} #{package.to_s} master`
+			subtree_output
+		end
+		attr_reader :repo
 	end
 end
