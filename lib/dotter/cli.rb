@@ -4,6 +4,7 @@ require 'dotter/gitrepo'
 require 'dotter/version'
 require 'dotter/configuration'
 require 'dotter/package'
+require 'dotter/publicgitrepo'
 require 'pathname'
 module Dotter
 class CLI < Thor
@@ -73,6 +74,8 @@ class CLI < Thor
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
 		puts "Making package #{package} public"
+		public_repo = PublicGitRepo.new
+		puts public_repo.add_package(package)
 	end
 	desc "unpublish PACKAGE", "Make a package private after publishing it."
 	def unpublish(package)
@@ -130,8 +133,8 @@ class CLI < Thor
 			error "Package #{package} is not tracked by Git."
 			exit 1
 		end
-		metadata_path = repo_path(package)
-		metadata_indexes_path = index_path(package)
+		metadata_path = repo_path(package.to_s)
+		metadata_indexes_path = index_path(package.to_s)
 		# Punt because it does this better than ruby-git.
 		system({"GIT_DIR" => metadata_path.to_s, "GIT_INDEX_FILE" => metadata_indexes_path.to_s}, "git status")
 	end

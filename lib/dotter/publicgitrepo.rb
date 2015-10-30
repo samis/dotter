@@ -19,6 +19,7 @@ module Dotter
 			@repo = Git.init(@project_path.to_s)
 		end
 		def add_package(package)
+			Dir.chdir(@project_path)
 			packagerepo = GitRepo.new(package)
 			package_repo = packagerepo.repo
 			@repo.add_remote(package.to_s, package_repo)
