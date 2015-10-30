@@ -107,6 +107,13 @@ class CLI < Thor
 	desc "import PATH PACKAGE", "Imports a file or directory into the specified package"
 	def import(path, package)
 		puts "Importing #{path} into package {package}"
+		filepath = Pathname.new(File.expand_path(path))
+		packagepath = package_path(package)
+		homepath = Pathname.new(File.expand_path('~'))
+		relative_filepath = filepath.relative_path_from(homepath)
+		complete_path = packagepath + relative_filepath
+		FileUtils.copy(File.expand_path(path), complete_path.to_s)
+		puts "File imported successfully. Update the package to make the symlink."
 	end
 	desc "import_repo REPO_URL PACKAGE", "Clones the specified git repository as the contents of the specified Package."
 	def import_repo(repo_url, package)
