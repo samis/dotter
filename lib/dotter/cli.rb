@@ -64,6 +64,11 @@ class CLI < Thor
 		package = Package.new(package)
 		package.track
 		puts "Repository for package #{package} initialised. Git's metadata is stored in #{package.repo.metadata_path.to_s}"
+		puts "Creating an initial snapshot to serve as a starting point."
+		repo = package.repo
+		repo.add('.')
+		repo.commit_all("Initial snapshot of the package's contents")
+		puts "Initial snapshot created."
 	end
 	desc "publish PACKAGE", "Make a package available in your public dotfiles repository"
 	def publish(package)
