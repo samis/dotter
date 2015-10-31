@@ -1,3 +1,4 @@
+ require 'pathname'
  module Dotter
 	 module Utilities
 		@@dotfiles_path = Pathname(File.expand_path('~/dotfiles')) 
