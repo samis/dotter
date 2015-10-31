@@ -5,14 +5,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'dotter/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "dotter"
+  gem.name          = "dotter_dotfiles"
   gem.version       = Dotter::VERSION
-  gem.summary       = %q{TODO: Summary}
-  gem.description   = %q{TODO: Description}
+  gem.summary       = %q{A dotfiles managaer}
+  gem.description   = %q{A simple, yet powerful dotfiles manager that wraps around stow and git}
   gem.license       = "MIT"
   gem.authors       = ["Samuel Hodgkins"]
   gem.email         = "samuel.hodgkins@sky.com"
-  gem.homepage      = "https://rubygems.org/gems/dotter"
+  gem.homepage      = "https://rubygems.org/gems/dotter_dotfiles"
 
   gem.files         = `git ls-files`.split($/)
 
