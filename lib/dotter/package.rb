@@ -43,6 +43,12 @@ module Dotter
 		def to_s
 			@name
 		end
+		def public?
+			@our_config['public'] = true
+		end
+		def private?
+			!self.public?
+		end
 		attr_reader :name
 		attr_accessor :config
 		attr_reader :repo

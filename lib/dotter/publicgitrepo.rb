@@ -24,6 +24,8 @@ module Dotter
 			package_repo = packagerepo.repo
 			@repo.add_remote(package.to_s, package_repo)
 			subtree_output = `git subtree add --prefix #{package.to_s} #{package.to_s} master`
+			conf = Configuration.new
+			conf.publish(package)
 			subtree_output
 		end
 		attr_reader :repo
