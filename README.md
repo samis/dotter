@@ -4,7 +4,7 @@ As the title explained, dotter is a tool to manage your dotfiles. It is written 
 It wraps around both tools in order to achieve easy and effective management of dotfiles. Stow handles the symlinking of them while Git tracks the history.
 It is very new, unfinished software that likely has multiple bugs. However, due to the specific tools used there is not too much risk with using it.
 
-It is not yet published to rubygems but you can install the required dependencies via bundler.
+Due to the name 'dotter' already being used, the gem is available under the name 'dotter_dotfiles'. Install it with `gem install dotter_dotfiles`
 
 To see all available commands, use `dotter help`. Not all commands are currently implemented.
 
