@@ -104,6 +104,12 @@ class CLI < Thor
 	desc "update PACKAGE", "Updates the specified package"
 	def update(package)
 		puts "Updating the contents / symlinks for package #{package}"
+		package = Package.new(package)
+		if package.unstowed?
+			error "Package #{package} is not stowed and therefore cannot be updated."
+			exit 1
+		end
+		package.update
 	end
 	desc "update_all", "Updates all stowed packages."
 	def update_all()

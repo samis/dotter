@@ -28,6 +28,10 @@ module Dotter
 			@repo = GitRepo.new(@name,true)
 			@config.track(@name)
 		end
+		def update
+			go_to_dotfiles
+			returned_output = `stow -Rv #{@name}`
+		end
 		def stowed?
 			@our_config['state'] == 'stowed'
 		end
