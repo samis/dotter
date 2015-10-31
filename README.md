@@ -1,31 +1,16 @@
-# dotter
+# Dotter, a dotfiles manager using stow & git
 
-* [Homepage](https://rubygems.org/gems/dotter)
-* [Documentation](http://rubydoc.info/gems/dotter/frames)
-* [Email](mailto:samuel.hodgkins at sky.com)
+As the title explained, dotter is a tool to manage your dotfiles. It is written in ruby and uses the tools stow and git in order to manage your dotfiles effectively.
+It wraps around both tools in order to achieve easy and effective management of dotfiles. Stow handles the symlinking of them while Git tracks the history.
+It is very new, unfinished software that likely has multiple bugs. However, due to the specific tools used there is not too much risk with using it.
 
-## Description
+It is not yet published to rubygems but you can install the required dependencies via bundler.
 
-TODO: Description
+To see all available commands, use `dotter help`. Not all commands are currently implemented.
 
-## Features
-
-## Examples
-
-    require 'dotter'
-
-## Requirements
-
-## Install
-
-    $ gem install dotter
-
-## Synopsis
-
-    $ dotter
-
-## Copyright
-
-Copyright (c) 2015 Samuel Hodgkins
-
-See LICENSE.txt for details.
+## TODO
+1. Refactor and clean up the code.
+2. Implement all unimplemented commands.
+3. Implement error handling
+4. Add any useful suggested features.
+5. Port to Crystal so it can be a single executable.
