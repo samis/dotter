@@ -28,6 +28,14 @@ module Dotter
 			conf.publish(package)
 			subtree_output
 		end
+		def remove_package(package)
+			Dir.chdir(@project_path)
+			@repo.remote(package).remove
+			FileUtils.remove_dir(package)
+			@repo.commit_all('Removed package #{package}')
+			conf = Configuration.new
+			conf.unpublish(package)
+		end
 		attr_reader :repo
 	end
 end

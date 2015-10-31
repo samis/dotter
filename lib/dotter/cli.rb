@@ -80,6 +80,8 @@ class CLI < Thor
 	desc "unpublish PACKAGE", "Make a package private after publishing it."
 	def unpublish(package)
 		puts "Making package #{package} private again"
+		public_repo = PublicGitRepo.new
+		public_repo.remove_package(package)
 	end
 	method_option :commit_message, :required => true, :aliases => "-m"
 	method_option :all, :type => :boolean, :aliases => "-a"
