@@ -30,7 +30,8 @@ module Dotter
 		end
 		def remove_package(package)
 			Dir.chdir(@project_path)
-			@repo.remote(package).remove
+			# This was broken with ruby-git. Someone else should check.
+			`git remote remove #{package}`
 			FileUtils.remove_dir(package)
 			@repo.commit_all('Removed package #{package}')
 			conf = Configuration.new
