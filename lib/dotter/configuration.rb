@@ -25,5 +25,15 @@ module Dotter
 			package_conf['tracked'] = true
 			self.save()
 		end
+		def publish(package)
+			package_conf = self.package_config(package)
+			package_conf['public'] = true
+			self.save()
+		end
+		def unpublish(package)
+			package_conf = self.package_config(package)
+			package_conf['public'] = false
+			self.save()
+		end
 	end
 end
