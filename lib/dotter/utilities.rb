@@ -21,7 +21,7 @@
 		def index_path(package)
 			@@dotter_path + '.dotter/indexes/' + package
 		end
-		def all_packages
+		def all_package_names
 			directory = Pathname.new(@@dotfiles_path)
 			directories = directory.children.select { |c| c.directory? }
 			package_names = []

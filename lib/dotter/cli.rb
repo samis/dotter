@@ -28,7 +28,7 @@ class CLI < Thor
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
 		puts "List of packages in ~/dotfiles"
-		all_packages.each do |package| 
+		all_package_names.each do |package| 
 			puts package
 		end
 	end
