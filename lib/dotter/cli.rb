@@ -28,14 +28,7 @@ class CLI < Thor
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
 		puts "List of packages in ~/dotfiles"
-		directory_name = dotfiles_path
-		directory = Pathname.new(directory_name)
-		directories = directory.children.select { |c| c.directory? }
-		package_names = []
-		directories.each do |directory| 
-			package_names.push(directory.basename)
-		end
-		package_names.each do |package| 
+		all_packages.each do |package| 
 			puts package
 		end
 	end

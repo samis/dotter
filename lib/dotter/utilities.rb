@@ -21,5 +21,14 @@
 		def index_path(package)
 			@@dotter_path + '.dotter/indexes/' + package
 		end
+		def all_packages
+			directory = Pathname.new(@@dotfiles_path)
+			directories = directory.children.select { |c| c.directory? }
+			package_names = []
+			directories.each do |directory| 
+				package_names.push(directory.basename)
+			end
+			package_names
+		end
 	 end
 end
