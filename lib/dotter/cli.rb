@@ -107,6 +107,15 @@ class CLI < Thor
 	desc "update_all", "Updates all stowed packages."
 	def update_all()
 		puts "Updating all stowed packages"
+		all_packages = []
+		all_package_names.each do |package|
+			all_packages.push(Package.new(package.to_s))
+		end
+		stowed_packages = all_packages.select { |package| package.stowed? }
+		stowed_packages.each do |package|
+			puts "Updating #{package}"
+			package.update
+		end
 	end
 	desc "import PATH PACKAGE", "Imports a file or directory into the specified package"
 	def import(path, package)
