@@ -24,6 +24,8 @@ class CLI < Thor
 		puts "Creating an initial package for dotter."
 		FileUtils.mkpath('dotter/.dotter/gitrepos')
 		FileUtils.mkpath('dotter/.dotter/indexes/')
+		# If we don't do this now, we'll get a nasty exception if we ever access the configuration.
+		FIleUtils.touch('dotter/.dotter/Dotfile')
 	end
 	desc "list", "List all packages present in ~/dotfiles"
 	def list
