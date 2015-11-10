@@ -121,9 +121,10 @@ class CLI < Thor
 	end
 	desc "import PATH PACKAGE", "Imports a file or directory into the specified package"
 	def import(path, package)
-		puts "Importing #{path} into package {package}"
+		puts "Importing #{path} into package #{package}"
 		filepath = Pathname.new(File.expand_path(path))
 		packagepath = package_path(package)
+		if not Dir.exist?(packagepath.to_s) then FileUtils.mkpath(packagepath.to_s) end
 		homepath = Pathname.new(File.expand_path('~'))
 		relative_filepath = filepath.relative_path_from(homepath)
 		complete_path = packagepath + relative_filepath
