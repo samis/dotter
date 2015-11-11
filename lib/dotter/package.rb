@@ -9,7 +9,11 @@ module Dotter
 			@config = Configuration.new
 			@our_config = @config.package_config(@name)
 			if self.tracked?
-				@repo = GitRepo.new(name)
+				unless self.foreign?
+					 repo = GitRepo.new(name)
+				else
+					repo = ForeignGitRepo.new(name)
+				end
 			end
 		end
 		def stow
@@ -44,11 +48,13 @@ module Dotter
 		def untracked?
 			!self.tracked?
 		end
+		def foreign?
+			@our_config['type'] == 'git_repo'
 		def to_s
 			@name
 		end
 		def public?
-			@our_config['public'] = true
+			@our_config['public'] == true
 		end
 		def private?
 			!self.public?
