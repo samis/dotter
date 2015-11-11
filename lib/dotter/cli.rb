@@ -5,6 +5,7 @@ require 'dotter/version'
 require 'dotter/configuration'
 require 'dotter/package'
 require 'dotter/publicgitrepo'
+require 'dotter/foreigngitrepo'
 require 'pathname'
 module Dotter
 class CLI < Thor
@@ -134,6 +135,11 @@ class CLI < Thor
 	desc "import_repo REPO_URL PACKAGE", "Clones the specified git repository as the contents of the specified Package."
 	def import_repo(repo_url, package)
 		puts "Cloning repository #{repo_url} into package #{package}"
+		cloned_repository = ForeignGitRepo.new(package,true,repo_url)
+		puts "Repository #{repo_url} successfully cloned into #{package}."
+		# We need to manually set the package as tracked to avoid calling init() again.
+		config = Configuration.new
+		config.track(package)
 	end
 	desc "clone REPO_URL", "Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data."
 	def clone(repo_url)

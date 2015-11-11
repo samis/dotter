@@ -14,7 +14,7 @@ module Dotter
 				else
 					repo = ForeignGitRepo.new(name)
 				end
-			end
+			end		
 		end
 		def stow
 			go_to_dotfiles
@@ -50,6 +50,7 @@ module Dotter
 		end
 		def foreign?
 			@our_config['type'] == 'git_repo'
+		end
 		def to_s
 			@name
 		end
