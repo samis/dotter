@@ -37,7 +37,7 @@ module Dotter
 		end
 		def set_type(package, type)
 			package_conf = self.package_config(package)
-			package_conf['type'] = 'git_repo'
+			package_conf['type'] = type
 			self.save()
 		end
 	end
