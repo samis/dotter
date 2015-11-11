@@ -2,7 +2,7 @@ require 'git'
 require 'dotter/utilities'
 module Dotter
 	class ForeignGitRepo < GitRepo
-		def initialize(package, init=false, source_repository)
+		def initialize(package, init=false, source_repository="")
 			@package = package
 			@project_path = package_path(package)
 			@origin = source_repository

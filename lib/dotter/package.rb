@@ -1,6 +1,7 @@
 require 'dotter/utilities'
 require 'dotter/configuration'
 require 'dotter/gitrepo'
+require 'dotter/foreigngitrepo'
 module Dotter
 	class Package
 		include Utilities
@@ -10,9 +11,9 @@ module Dotter
 			@our_config = @config.package_config(@name)
 			if self.tracked?
 				unless self.foreign?
-					 repo = GitRepo.new(name)
+					@repo = GitRepo.new(name)
 				else
-					repo = ForeignGitRepo.new(name)
+					@repo = ForeignGitRepo.new(name)
 				end
 			end		
 		end
