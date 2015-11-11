@@ -20,7 +20,8 @@ module Dotter
 		end
 		def add_package(package)
 			Dir.chdir(@project_path)
-			packagerepo = GitRepo.new(package)
+			other_package = Package.new(package)
+			packagerepo = other_package.repo
 			package_repo = packagerepo.repo
 			@repo.add_remote(package.to_s, package_repo)
 			subtree_output = `git subtree add --prefix #{package.to_s} #{package.to_s} master`
