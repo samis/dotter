@@ -97,13 +97,13 @@ class CLI < Thor
 			repo.commit(commit_message)
 		end
 	end
-	desc "update PACKAGE", "Updates the specified package"
+	desc "update PACKAGE", "Updates the specified package. For packages imported from external repositories, also updates the repository."
 	def update(package)
 		puts "Updating the contents / symlinks for package #{package}"
 		package = Package.new(package)
 		if package.unstowed?
-			error "Package #{package} is not stowed and therefore cannot be updated."
-			exit 1
+			#error "Package #{package} is not stowed and therefore cannot be updated."
+			#exit 1
 		end
 		package.update
 	end
@@ -140,6 +140,7 @@ class CLI < Thor
 		# We need to manually set the package as tracked to avoid calling init() again.
 		config = Configuration.new
 		config.track(package)
+		config.set_type(package, 'git_repo')
 	end
 	desc "clone REPO_URL", "Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data."
 	def clone(repo_url)
