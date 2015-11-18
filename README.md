@@ -14,7 +14,30 @@ It is very new, unfinished software that likely has multiple bugs. However, due 
 
 Due to the name 'dotter' already being used, the gem is available under the name 'dotter_dotfiles'. Install it with `gem install dotter_dotfiles`
 
-To see all available commands, use `dotter help`. Not all commands are currently implemented.
+To see all available commands, use `dotter help` or look at the list of commands below. Not all commands are currently implemented.
+
+Commands:
+```
+  dotter add PACKAGE FILE                                    # Add a file from a package to the next commit of that package.
+  dotter clone REPO_URL                                      # Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data.
+  dotter commit PACKAGE -m, --commit-message=COMMIT_MESSAGE  # Commit your changes to a Git-tracked package.
+  dotter help [COMMAND]                                      # Describe available commands or one specific command
+  dotter import PATH PACKAGE                                 # Imports a file or directory into the specified package
+  dotter import_repo REPO_URL PACKAGE                        # Clones the specified git repository as the contents of the specified Package.
+  dotter init                                                # Initialise the directory structure for ~/dotfiles
+  dotter list                                                # List all packages present in ~/dotfiles
+  dotter log PACKAGE                                         # View the commit log of a package.
+  dotter publish PACKAGE                                     # Make a package available in your public dotfiles repository
+  dotter reset PACKAGE                                       # Reset what will be commmitted in the next commit to the given package.
+  dotter status PACKAGE                                      # Obtain the repository status of a Git-tracked package.
+  dotter stow PACKAGE                                        # Stow the given package name.
+  dotter track PACKAGE                                       # Begin tracking the given package with Git
+  dotter unpublish PACKAGE                                   # Make a package private after publishing it.
+  dotter unstow PACKAGE                                      # Unstow the given package name.
+  dotter update PACKAGE                                      # Updates the specified package
+  dotter update_all                                          # Updates all stowed packages.
+  dotter version                                             # Print the dotter version
+```
 This project tries to follow [Semantic Versioning](http://semver.org/) but no guarantees are made in this regard.
 ## TODO
 1. Refactor and clean up the code.
