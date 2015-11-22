@@ -150,8 +150,9 @@ module Dotter
       repo = Git.clone(repo_url, @@dotfiles_path.to_s)
       puts "Due to implementation difficulties, all the the commit history and state information will be lost."
       go_to_dotfiles
-      puts `rm -rf .git`
-      puts `rm -rf dotter/*`
+      `rm -rf .git`
+      `rm -rf dotter/*`
+      `touch dotter/Dotfile`
     end
     desc 'status PACKAGE', 'Obtain the repository status of a Git-tracked package.'
     def status(package)
