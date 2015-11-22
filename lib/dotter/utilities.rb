@@ -14,6 +14,7 @@ module Dotter
       @@dotfiles_path + package
     end
     @@dotter_path = @@dotfiles_path + 'dotter'
+    @@public_repo_path = @@dotfiles_path + 'public'
     def dotter_path
       @@dotter_path
     end
