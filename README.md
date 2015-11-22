@@ -42,8 +42,8 @@ Commands:
 This project tries to follow [Semantic Versioning](http://semver.org/) but no guarantees are made in this regard.
 ## TODO
 1. Refactor and clean up the code.
-~~2. Implement all unimplemented commands.~~
-2.1 Make the `clone` command smarter
-3. Implement error handling
-4. Add any useful suggested features.
-5. Port to Crystal so it can be a single executable.
+2. ~~Implement all unimplemented commands.~~
+3. Make the `clone` command smarter
+4. Implement error handling
+5. Add any useful suggested features.
+6. Port to Crystal so it can be a single executable.
