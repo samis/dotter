@@ -47,5 +47,10 @@ module Dotter
       package_conf['type'] = type
       save
     end
+    def set_url(package,url)
+      package_conf = package_config(package)
+      package_conf['url'] = url
+      save
+    end
   end
 end

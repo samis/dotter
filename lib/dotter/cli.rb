@@ -102,8 +102,8 @@ module Dotter
       puts "Updating the contents / symlinks for package #{package}"
       package = Package.new(package)
       if package.unstowed?
-        # error "Package #{package} is not stowed and therefore cannot be updated."
-        # exit 1
+        error "Package #{package} is not stowed and therefore cannot be updated."
+        exit 1
       end
       package.update
     end
@@ -141,6 +141,7 @@ module Dotter
       config = Configuration.new
       config.track(package)
       config.set_type(package, 'git_repo')
+      config.set_url(package, repo_url)
     end
     desc 'clone REPO_URL', 'Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data.'
     def clone(repo_url)
