@@ -147,26 +147,11 @@ module Dotter
     desc 'clone REPO_URL', 'Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data.'
     def clone(repo_url)
       puts "Cloning repository #{repo_url} directly into ~/dotfiles"
-      repo = Git.clone(repo_url, @@public_repo_path.to_s)
-      directory = Pathname.new(@@public_repo_path.to_s)
-      directories = directory.children.select(&:directory?)
-      package_names = []
-      Dir.chdir(@@public_repo_path.to_s)
-      directories.each do |directory|
-        if directory.basename == '.git'then next end
-        package_names.push(directory.basename)
-        package_names.each do |package_name|
-          `git subtree split -P #{package_name} -b #{package_name}`
-          Dir.chdir(@@dotfiles_path.to_s) do
-            split_repository = GitRepo.new(package_name, false, true)
-            split_repo = split_repository.repo
-            public_repo = PublicGitRepo.new().repo
-            split_repo.add_remote('public', public_repo, track: package_name)
-            split_repo.pull('public', package_name)
-          end
-        end
-      end
-
+      repo = Git.clone(repo_url, @@dotfiles_path.to_s)
+      puts "Due to implementation difficulties, all the the commit history and state information will be lost."
+      go_to_dotfiles
+      puts `rm -rf .git`
+      puts `rm -rf dotter/*`
     end
     desc 'status PACKAGE', 'Obtain the repository status of a Git-tracked package.'
     def status(package)
