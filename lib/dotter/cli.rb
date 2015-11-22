@@ -7,6 +7,7 @@ require 'dotter/package'
 require 'dotter/publicgitrepo'
 require 'dotter/foreigngitrepo'
 require 'pathname'
+require 'git'
 module Dotter
   class CLI < Thor
     include Utilities
@@ -26,7 +27,7 @@ module Dotter
       FileUtils.mkpath('dotter/.dotter/gitrepos')
       FileUtils.mkpath('dotter/.dotter/indexes/')
       # If we don't do this now, we'll get a nasty exception if we ever access the configuration.
-      FIleUtils.touch('dotter/.dotter/Dotfile')
+      FileUtils.touch('dotter/.dotter/Dotfile')
     end
     desc 'list', 'List all packages present in ~/dotfiles'
     def list
@@ -146,6 +147,25 @@ module Dotter
     desc 'clone REPO_URL', 'Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data.'
     def clone(repo_url)
       puts "Cloning repository #{repo_url} directly into ~/dotfiles"
+      repo = Git.clone(repo_url, @@public_repo_path.to_s)
+      directory = Pathname.new(@@public_repo_path.to_s)
+      directories = directory.children.select(&:directory?)
+      package_names = []
+      Dir.chdir(@@public_repo_path.to_s)
+      directories.each do |directory|
+        package_names.push(directory.basename)
+        package_names.each do |package_name|
+          `git subtree split -P #{package_name} -b #{package_name}`
+          Dir.chdir(@@dotfiles_path.to_s) do
+            split_repository = GitRepo.new(package_name, false, true)
+            split_repo = split_repository.repo
+            public_repo = PublicGitRepo.new().repo
+            split_repo.add_remote('public', public_repo, track: package_name)
+            split_repo.pull('public', package_name)
+          end
+        end
+      end
+
     end
     desc 'status PACKAGE', 'Obtain the repository status of a Git-tracked package.'
     def status(package)
