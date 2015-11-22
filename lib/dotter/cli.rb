@@ -153,7 +153,7 @@ module Dotter
       package_names = []
       Dir.chdir(@@public_repo_path.to_s)
       directories.each do |directory|
-        if directory.basename == '.git'then continue end
+        if directory.basename == '.git'then next end
         package_names.push(directory.basename)
         package_names.each do |package_name|
           `git subtree split -P #{package_name} -b #{package_name}`
