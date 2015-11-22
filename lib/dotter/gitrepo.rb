@@ -3,7 +3,7 @@ module Dotter
   require 'dotter/utilities'
   class GitRepo
     include Utilities
-    def initialize(package, init = false)
+    def initialize(package, init = false, bare = false)
       @package = package
       @project_path = package_path(package)
       @metadata_path = repo_path(package)
@@ -11,7 +11,7 @@ module Dotter
       unless init
         open
       else
-        self.init
+        self.init(bare)
       end
     end
 
@@ -20,8 +20,12 @@ module Dotter
       @log = @repo.log
     end
 
-    def init
-      @repo = Git.init(@project_path.to_s, repository: @metadata_path.to_s, index: @metadata_indexes_path.to_s)
+    def init(bare = false)
+      unless bare
+        @repo = Git.init(@project_path.to_s, repository: @metadata_path.to_s, index: @metadata_indexes_path.to_s)
+      else
+        @repo = Git.init(@project_path.to_s, repository: @metadata_path.to_s, index: @metadata_indexes_path.to_s, bare: true)
+      end
     end
     attr_reader :repo
     attr_reader :project_path
