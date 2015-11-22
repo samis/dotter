@@ -14,7 +14,8 @@ It is very new, unfinished software that likely has multiple bugs. However, due 
 
 Due to the name 'dotter' already being used, the gem is available under the name 'dotter_dotfiles'. Install it with `gem install dotter_dotfiles`
 
-To see all available commands, use `dotter help` or look at the list of commands below. Not all commands are currently implemented.
+To see all available commands, use `dotter help` or look at the list of commands below. All commands are implemented, but the clone command is dumb due to the difficulties
+involved in reconstructing the entire structure and state ` ~/dotfiles` from a single, flat git repository.
 
 Commands:
 ```
@@ -41,7 +42,8 @@ Commands:
 This project tries to follow [Semantic Versioning](http://semver.org/) but no guarantees are made in this regard.
 ## TODO
 1. Refactor and clean up the code.
-2. Implement all unimplemented commands.
+~~2. Implement all unimplemented commands.~~
+2.1 Make the `clone` command smarter
 3. Implement error handling
 4. Add any useful suggested features.
 5. Port to Crystal so it can be a single executable.
