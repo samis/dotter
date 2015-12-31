@@ -38,6 +38,7 @@ Commands:
   dotter update PACKAGE                                      # Updates the specified package
   dotter update_all                                          # Updates all stowed packages.
   dotter version                                             # Print the dotter version
+  dotter update_public                                       # Updates the contents of the public git repository and then pushes it
 ```
 This project tries to follow [Semantic Versioning](http://semver.org/) but no guarantees are made in this regard.
 ## TODO

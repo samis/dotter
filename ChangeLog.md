@@ -1,3 +1,6 @@
+### 0.4.0 / 2015-12-31
+* Add a command to update and push the public repository to the 'public' remote.
+
 ### 0.3.0 / 2015-11-10
 * Attempted (and failed) to implement a smart clone command.
 * Implemented a dumb clone command that wipes away VCS history and package state after cloning.
