@@ -121,6 +121,13 @@ module Dotter
         package.update
       end
     end
+    desc 'update_public', 'Updates the contents of the public git repository and then pushes it'
+    def update_public
+      puts "Updating the public repository."
+      public_repo = PublicGitRepo.new
+      public_repo.update
+      public_repo.push
+    end
     desc 'import PATH PACKAGE', 'Imports a file or directory into the specified package'
     def import(path, package)
       puts "Importing #{path} into package #{package}"
