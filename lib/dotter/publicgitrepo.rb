@@ -42,6 +42,27 @@ module Dotter
       conf = Configuration.new
       conf.unpublish(package)
     end
+    def update
+      Dir.chdir(@project_path)
+      directories = directory.children.select(&:directory?)
+      package_names = []
+      directories.each do |directory|
+        package_names.push(directory.basename)
+      end
+      packages = []
+      package_names.each do |name|
+        packages.push(Package.new(name))
+      end
+      packages = packages.select(&:public?)
+      subtree_output =  ""
+      packages.each do |package|
+        subtree_output = subtree_output.concat(`git subtree pull --prefix #{package.to_s} #{package.to_s} master`)
+      end
+      subtree_output
+    end
+    def push
+      @repo.push
+    end
     attr_reader :repo
   end
 end
