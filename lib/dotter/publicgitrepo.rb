@@ -44,6 +44,7 @@ module Dotter
     end
     def update
       Dir.chdir(@project_path)
+      directory = Pathname.new(@project_path)
       directories = directory.children.select(&:directory?)
       package_names = []
       directories.each do |directory|

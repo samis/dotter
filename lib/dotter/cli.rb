@@ -125,7 +125,7 @@ module Dotter
     def update_public
       puts "Updating the public repository."
       public_repo = PublicGitRepo.new
-      public_repo.update
+      puts public_repo.update
       public_repo.push
     end
     desc 'import PATH PACKAGE', 'Imports a file or directory into the specified package'
