@@ -21,7 +21,7 @@ I have been using this tool for a while now, and it has worked really well. Howe
 This first issue is that stow has an automatic 'ignore list' that ignores certain directories like `.git`. 
 This is unexpected and I made one of the design choices (stuffing the git metadata into `~/.dotter/gitrepos/<PACKAGE>` was it.) based around the fact that this did not happen.
 The design decision above has caused multiple other issues such as limited git functionality and a really difficult-to-write accurate clone command.
-There are other ways to manage dotfiles, but in the interests of not fixing stuff that isn't broken, I plan to seperate the stow/git specific code out and add in another method, likely based [this](https://github.com/NorfairKing/super-user-spark) repository.
+There are other ways to manage dotfiles, but in the interests of not fixing stuff that isn't broken, I plan to seperate the stow/git specific code out and add in another method, likely based on [this](https://github.com/NorfairKing/super-user-spark) repository.
 
 Commands:
 ```
