@@ -21,7 +21,7 @@ module Dotter
 
     def stow
       go_to_dotfiles
-      returned_output = `stow -v #{@name}`
+      returned_output = @backend.stow(@name)
       @config.set_state(@name, 'stowed')
       returned_output
     end
