@@ -2,6 +2,7 @@ require 'dotter/utilities'
 require 'dotter/configuration'
 require 'dotter/gitrepo'
 require 'dotter/foreigngitrepo'
+require 'dotter/errors'
 module Dotter
   class Package
     include Utilities
@@ -21,6 +22,10 @@ module Dotter
 
     def stow
       go_to_dotfiles
+      if self.stowed?
+        raise PackageAlreadyStowedError
+        return
+      end
       returned_output = @backend.stow(@name)
       @config.set_state(@name, 'stowed')
       returned_output

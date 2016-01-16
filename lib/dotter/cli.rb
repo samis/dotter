@@ -43,12 +43,13 @@ module Dotter
     desc 'stow PACKAGE', 'Stow the given package name.'
     def stow(package)
       package = Package.new(package, @backend)
-      if package.stowed?
-        error "Package #{package} is already stowed."
+      puts "Stowing package #{package}"
+      begin
+        puts package.stow
+      rescue PackageAlreadyStowedError
+        puts "Package #{package} is already stowed."
         exit(1)
       end
-      puts "Stowing package #{package}"
-      puts package.stow
     end
     desc 'unstow PACKAGE', 'Unstow the given package name.'
     def unstow(package)
