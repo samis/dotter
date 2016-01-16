@@ -47,19 +47,20 @@ module Dotter
       begin
         puts package.stow
       rescue PackageAlreadyStowedError
-        puts "Package #{package} is already stowed."
+        error "Package #{package} is already stowed."
         exit(1)
       end
     end
     desc 'unstow PACKAGE', 'Unstow the given package name.'
     def unstow(package)
       package = Package.new(package)
-      if package.unstowed?
+      puts "Unstowing package #{package}"
+      begin
+        puts package.unstow
+      rescue PackageNotStowedError
         error "Package #{package} is not stowed."
         exit(1)
       end
-      puts "Unstowing package #{package}"
-      puts package.unstow
     end
     desc 'track PACKAGE', 'Begin tracking the given package with Git'
     def track(package)

@@ -24,7 +24,6 @@ module Dotter
       go_to_dotfiles
       if self.stowed?
         raise PackageAlreadyStowedError
-        return
       end
       returned_output = @backend.stow(@name)
       @config.set_state(@name, 'stowed')
@@ -33,6 +32,9 @@ module Dotter
 
     def unstow
       go_to_dotfiles
+      if self.unstowed?
+        raise PackageNotStowedError
+      end
       returned_output = @backend.unstow(@name)
       @config.set_state(@name, 'unstowed')
       returned_output
