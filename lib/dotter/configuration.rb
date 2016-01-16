@@ -1,4 +1,5 @@
 require 'dotter/utilities'
+require 'dotter/backends/stow_backend'
 require 'inifile'
 module Dotter
   class Configuration
@@ -51,6 +52,9 @@ module Dotter
       package_conf = package_config(package)
       package_conf['url'] = url
       save
+    end
+    def get_backend()
+      Dotter::StowBackend.new
     end
   end
 end

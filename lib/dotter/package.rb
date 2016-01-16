@@ -5,8 +5,9 @@ require 'dotter/foreigngitrepo'
 module Dotter
   class Package
     include Utilities
-    def initialize(name)
+    def initialize(name, backend=Configuration.new.get_backend)
       @name = name
+      @backend = backend
       @config = Configuration.new
       @our_config = @config.package_config(@name)
       if self.tracked?

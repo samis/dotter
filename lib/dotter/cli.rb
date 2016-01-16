@@ -11,6 +11,10 @@ require 'git'
 module Dotter
   class CLI < Thor
     include Utilities
+    def initialize(*args)
+      super
+      @backend = Configuration.new.get_backend
+    end
     desc 'version', 'Print the dotter version'
     def version
       puts "This is dotter #{Dotter::VERSION}"
@@ -38,7 +42,7 @@ module Dotter
     end
     desc 'stow PACKAGE', 'Stow the given package name.'
     def stow(package)
-      package = Package.new(package)
+      package = Package.new(package, @backend)
       if package.stowed?
         error "Package #{package} is already stowed."
         exit(1)
