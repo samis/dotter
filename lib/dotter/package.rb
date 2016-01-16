@@ -82,8 +82,13 @@ module Dotter
     def private?
       !self.public?
     end
+    def repo
+      unless self.untracked?
+        raise PackageNotTrackedError
+      end
+      @repo
+    end
     attr_reader :name
     attr_accessor :config
-    attr_reader :repo
   end
 end

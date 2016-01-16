@@ -182,36 +182,39 @@ module Dotter
     desc 'add PACKAGE FILE', 'Add a file from a package to the next commit of that package.'
     def add(package, file)
       package = Package.new(package)
-      if package.untracked?
-        error "Package #{package} is not tracked by Git."
-        exit 1
-      end
       puts "Marking #{file} to be committed for package #{package}"
-      repo = package.repo
-      repo.add(file)
+      begin
+        repo = package.repo
+        repo.add(file)
+      rescue PackageNotTrackedError
+        error "Package #{package} is not tracked by Git."
+        exit(1)
+      end
     end
     desc 'reset PACKAGE', 'Reset what will be commmitted in the next commit to the given package.'
     def reset(package)
       package = Package.new(package)
-      if package.untracked?
-        error "Package #{package} is not tracked by Git."
-        exit 1
-      end
       puts "Resetting what will be committed to package #{package}"
-      repo = package.repo
-      repo.reset
+      begin
+        repo = package.repo
+        repo.reset
+      rescue PackageNotTrackedError
+        error "Package #{package} is not tracked by Git."
+        exit(1)
+      end
     end
     desc 'log PACKAGE', 'View the commit log of a package.'
     def log(package)
       package = Package.new(package)
-      if package.untracked?
-        error "Package #{package} is not tracked by Git."
-        exit 1
-      end
       puts "Obtaining the log of package #{package}"
-      repo = package.repo
-      repo.log.each do |commit|
-        puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
+      begin
+        repo = package.repo
+        repo.log.each do |commit|
+          puts "[#{commit.date}] #{commit.message} (#{commit.author.name})"
+        end
+      rescue PackageNotTrackedError
+        error "Package #{package} is not tracked by Git."
+        exit(1)
       end
     end
   end
