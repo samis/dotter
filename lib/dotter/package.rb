@@ -41,7 +41,7 @@ module Dotter
     def update
       go_to_dotfiles
       @repo.update if self.foreign?
-      returned_output = `stow -Rv #{@name}`
+      returned_output = @backend.update(@name)
     end
 
     def stowed?

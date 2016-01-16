@@ -7,5 +7,8 @@ module Dotter
     def unstow(package)
       `stow -Dv #{package}`
     end
+    def update(package)
+      `stow -Rv #{package}`
+    end
   end
 end
