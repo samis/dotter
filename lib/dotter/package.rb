@@ -28,7 +28,7 @@ module Dotter
 
     def unstow
       go_to_dotfiles
-      returned_output = `stow -Dv #{@name}`
+      returned_output = @backend.unstow(@name)
       @config.set_state(@name, 'unstowed')
       returned_output
     end
