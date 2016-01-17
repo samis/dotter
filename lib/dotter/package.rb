@@ -1,7 +1,6 @@
 require 'dotter/utilities'
 require 'dotter/configuration'
 require 'dotter/gitrepo'
-require 'dotter/foreigngitrepo'
 require 'dotter/errors'
 module Dotter
   class Package
@@ -12,11 +11,7 @@ module Dotter
       @config = Configuration.new
       @our_config = @config.package_config(@name)
       if self.tracked?
-        unless self.foreign?
-          @repo = GitRepo.new(name)
-        else
-          @repo = ForeignGitRepo.new(name)
-        end
+        @repo = GitRepo.new(name)
       end
     end
 
@@ -47,7 +42,6 @@ module Dotter
 
     def update
       go_to_dotfiles
-      @repo.update if self.foreign?
       returned_output = @backend.update(@name)
     end
 
@@ -65,10 +59,6 @@ module Dotter
 
     def untracked?
       !self.tracked?
-    end
-
-    def foreign?
-      @our_config['type'] == 'git_repo'
     end
 
     def to_s
