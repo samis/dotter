@@ -6,7 +6,7 @@ require 'dotter/errors'
 module Dotter
   class Package
     include Utilities
-    def initialize(name, backend=Configuration.new.get_backend)
+    def initialize(name, backend=Configuration.new.backend)
       @name = name
       @backend = backend
       @config = Configuration.new

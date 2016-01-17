@@ -20,11 +20,11 @@ module Dotter
     end
 
     def repo_path(package)
-      @@dotter_path + '.dotter/gitrepos/' + package
+      @backend.repository_path(package)
     end
 
     def index_path(package)
-      @@dotter_path + '.dotter/indexes/' + package
+      @backend.index_path(package)
     end
 
     def all_package_names

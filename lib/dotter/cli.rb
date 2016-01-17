@@ -13,7 +13,7 @@ module Dotter
     include Utilities
     def initialize(*args)
       super
-      @backend = Configuration.new.get_backend
+      @backend = Configuration.new.backend
     end
     desc 'version', 'Print the dotter version'
     def version

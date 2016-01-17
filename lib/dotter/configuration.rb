@@ -6,9 +6,11 @@ module Dotter
     include Utilities
     attr_reader :config_file
     attr_accessor :config
+    attr_accessor :backend
     def initialize(config_file = package_path('dotter') + '.dotter/Dotfile')
       @config_file = config_file
       @config = IniFile.load(config_file)
+      @backend = Dotter::StowBackend.new
     end
 
     def package_config(package)
@@ -52,9 +54,6 @@ module Dotter
       package_conf = package_config(package)
       package_conf['url'] = url
       save
-    end
-    def get_backend()
-      Dotter::StowBackend.new
     end
   end
 end
