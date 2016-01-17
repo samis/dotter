@@ -147,16 +147,6 @@ module Dotter
       puts 'File imported successfully. Update the package to make the symlink.'
     end
     desc 'import_repo REPO_URL PACKAGE', 'Clones the specified git repository as the contents of the specified Package.'
-    def import_repo(repo_url, package)
-      puts "Cloning repository #{repo_url} into package #{package}"
-      ForeignGitRepo.new(package, true, repo_url)
-      puts "Repository #{repo_url} successfully cloned into #{package}."
-      # We need to manually set the package as tracked to avoid calling init() again.
-      config = Configuration.new
-      config.track(package)
-      config.set_type(package, 'git_repo')
-      config.set_url(package, repo_url)
-    end
     desc 'clone REPO_URL', 'Clones the dotfiles / packages of the specified repository into ~/dotfiles. Will overwrite any existing data.'
     def clone(repo_url)
       puts "Cloning repository #{repo_url} directly into ~/dotfiles"
